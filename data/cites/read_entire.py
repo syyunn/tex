@@ -23,6 +23,7 @@ def create_heatmap(index, cols, df, title="Prediction on Citability"):
     plt.yticks(np.arange(0.5, len(df.index), 1), df.index, fontsize=16)
     plt.xticks(np.arange(0.5, len(df.columns), 1), df.columns, fontsize=15)
     ax.xaxis.tick_top()
+    ax.set_ylim((0, len(df.columns)))
 
     # plt.savefig(f"./data/cites/plots/{title}.png")
     plt.show()
@@ -56,13 +57,20 @@ scores = df["scores (S)"]
 dss = df["ds_split (S)"]
 
 # find unique indices
-indices = []
-for score in scores:
-    score = eval(score)
-    for item in score:
-        indices.append(item["name"].replace("Article", ""))
-
-indices = sorted(list(set(indices)))
+# indices = []
+# for score in scores:
+#     score = eval(score)
+#     for item in score:
+#         indices.append(item["name"].replace("Article", ""))
+#
+# indices = sorted(list(set(indices)))
+indices = ['I', 'I:1', 'II', 'II:1', 'II:1(a)', 'II:1(b)', 'II:2', 'II:3', 'III',
+       'III:1', 'III:2', 'III:4', 'III:5', 'IX', 'IX:2', 'V:6', 'VI', 'VI:1',
+       'VI:2', 'VI:2(a)', 'VI:2(b)', 'VI:3', 'VI:6', 'VII', 'VII:1', 'VII:2',
+       'VII:5', 'VIII', 'VIII:1', 'VIII:4', 'X', 'X:1', 'X:2', 'X:3', 'X:3(a)',
+       'XI', 'XI:1', 'XIII', 'XIII:1', 'XIII:2', 'XIX', 'XIX:1', 'XIX:2', 'XV',
+       'XVI', 'XVI:1', 'XVII', 'XVII:1', 'XVIII:11', 'XX', 'XXII', 'XXII:1',
+       'XXIII', 'XXIII:1', 'XXIII:1(a)', 'XXIII:1(b)', 'XXIV', 'XXVIII']
 
 # find unique dss
 columns = []
@@ -71,65 +79,51 @@ for ds in dss:
     columns.append(int(ds_num))
 
 dss = sorted(list(set(columns)), reverse=True)
-dss_nrv = sorted(list(set(columns)))
+# dss_nrv = sorted(list(set(columns)))
 
+# cites_nrv = DataFrame(
+#     abs(np.random.randn(len(dss_nrv), len(indices))), index=dss_nrv, columns=indices
+# )
 
-for country in countries:
-    ctn_specific_dss = []
-    for ds in dss:
-        if country in comps_per_ds[str(ds)]:
-            ctn_specific_dss.append(ds)
+errors = DataFrame(
+    abs(np.random.randn(len(dss), len(indices))),
+    index=dss,
+    columns=indices,
+)
 
-    if len(ctn_specific_dss) == 0:
-        continue
-    cites = DataFrame(
-        abs(np.random.randn(len(ctn_specific_dss), len(indices))),
-        index=ctn_specific_dss,
-        columns=indices,
-    )
+errors_discrete = DataFrame(
+    np.zeros((len(dss), len(indices))),
+    index=dss,
+    columns=indices,
+)
 
-    # cites_nrv = DataFrame(
-    #     abs(np.random.randn(len(dss_nrv), len(indices))), index=dss_nrv, columns=indices
-    # )
+labels = DataFrame(
+    abs(np.random.randn(len(dss), len(indices))),
+    index=dss,
+    columns=indices,
+)
 
-    errors = DataFrame(
-        abs(np.random.randn(len(ctn_specific_dss), len(indices))),
-        index=ctn_specific_dss,
-        columns=indices,
-    )
+for index, row in df.iterrows():
+    ds = int(row["ds_split (S)"].split("_")[0])
+    score = row["scores (S)"]
+    score = eval(score)
 
-    errors_discrete = DataFrame(
-        abs(np.random.randn(len(ctn_specific_dss), len(indices))),
-        index=ctn_specific_dss,
-        columns=indices,
-    )
+    for item in score:
+        art = item["name"].replace("Article", "").strip()
+        if art in indices:
+            pred = item["pred"]
+            label = item["label"]
+            error = abs(pred - label)
+            error_disc = abs(round(pred) - label)
 
-    labels = DataFrame(
-        abs(np.random.randn(len(ctn_specific_dss), len(indices))),
-        index=ctn_specific_dss,
-        columns=indices,
-    )
+            # cites_nrv.at[ds, art] = round(pred, 2)
+            errors.at[ds, art] = error
+            errors_discrete.at[ds, art] = error_disc
+            labels.at[ds, art] = label
+        else:
+            pass
 
-    for index, row in df.iterrows():
-        ds = int(row["ds_split (S)"].split("_")[0])
-
-        if ds in ctn_specific_dss:
-            score = row["scores (S)"]
-            score = eval(score)
-            for item in score:
-                art = item["name"].replace("Article", "")
-                pred = item["pred"]
-                label = item["label"]
-                error = abs(pred - label)
-                error_disc = abs(round(pred) - label)
-
-                cites.at[ds, art] = pred
-                # cites_nrv.at[ds, art] = round(pred, 2)
-                errors.at[ds, art] = error
-                errors_discrete.at[ds, art] = error_disc
-                labels.at[ds, art] = label
-
-    create_heatmap(ctn_specific_dss, indices, df=cites, title=f"{country}'s Prediction")
+create_heatmap(dss, indices, df=errors_discrete, title=f"Error")
     # create_heatmap(dss, indices, df=errors, title='Errors')
     # create_heatmap(dss, indices, df=errors_discrete, title=f'{country} Errors')
     # create_heatmap(dss, indices, df=labels, title='Labels')

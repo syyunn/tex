@@ -111,8 +111,10 @@ plt.yticks(np.arange(0.5, len(n_df_reverse.index), 1), n_df_reverse.index, fonts
 plt.xticks(np.arange(0.5, len(n_df_reverse.columns), 1), n_df_reverse.columns, fontsize=25)
 ax.xaxis.tick_top()
 
-plt.savefig(f"./data/cites/plots/coo.png")
-plt.show()
+print(n_df_reverse.columns)
+
+# plt.savefig(f"./data/cites/plots/coo.png")
+# plt.show()
 # plt.close()
 
 if __name__ == "__main__":
