@@ -1,0 +1,105 @@
+"""
+articles_concerned = [
+    "I",
+    "I:1",
+    "II",
+    "II:1",
+    "II:1(a)",
+    "II:1(b)",
+    "II:2",
+    "II:3",
+    "III",
+    "III:1",
+    "III:2",
+    "III:4",
+    "III:5",
+    "IX",
+    "IX:2",
+    "V:6",
+    "VI",
+    "VI:1",
+    "VI:2",
+    "VI:2(a)",
+    "VI:2(b)",
+    "VI:3",
+    "VI:6",
+    "VII",
+    "VII:1",
+    "VII:2",
+    "VII:5",
+    "VIII",
+    "VIII:1",
+    "VIII:4",
+    "X",
+    "X:1",
+    "X:2",
+    "X:3",
+    "X:3(a)",
+    "XI",
+    "XI:1",
+    "XIII",
+    "XIII:1",
+    "XIII:2",
+    "XIX",
+    "XIX:1",
+    "XIX:2",
+    "XV",
+    "XVI",
+    "XVI:1",
+    "XVII",
+    "XVII:1",
+    "XVIII:11",
+    "XX",
+    "XXII",
+    "XXII:1",
+    "XXIII",
+    "XXIII:1",
+    "XXIII:1(a)",
+    "XXIII:1(b)",
+    "XXIV",
+    "XXVIII",
+]
+"""
+
+[' I', ' I:1', ' II', ' II:1', ' II:1(a)', ' II:1(b)', ' II:2', ' II:3', ' III', ' III:1', ' III:2', ' III:4', ' III:5', ' III:7', ' IV', ' IX', ' IX:2', ' V', ' V:1', ' V:2', ' V:3', ' V:3(a)', ' V:4', ' V:5', ' V:6', ' V:7', ' VI', ' VI:1', ' VI:2', ' VI:2(a)', ' VI:2(b)', ' VI:3', ' VI:5(a)', ' VI:6', ' VII', ' VII:1', ' VII:2', ' VII:5', ' VIII', ' VIII:1', ' VIII:3', ' VIII:4', ' X', ' X:1', ' X:2', ' X:3', ' X:3(a)', ' XI', ' XI:1', ' XIII', ' XIII:1', ' XIII:2', ' XIII:3(b)', ' XIX', ' XIX:1', ' XIX:2', ' XIX:3', ' XV', ' XVI', ' XVI:1', ' XVI:4', ' XVII', ' XVII:1', ' XVII:1(c)', ' XVIII', ' XVIII:10', ' XVIII:11', ' XX', ' XXI', ' XXII', ' XXII:1', ' XXIII', ' XXIII:1', ' XXIII:1(a)', ' XXIII:1(b)', ' XXIV', ' XXIV:12', ' XXIV:5(b)', ' XXIV:6', ' XXVIII']
+
+Article I:1, Article III:2
+Article I:1, Article III:4
+Article II:1, Article I
+Article II:2, Article III:2
+Article II:2, Article VI
+Article VII, Article XV
+Article VIII:1, Article III
+Article X:3, Article X:1
+Article X:3(a), Article X:1
+Article XIII, Article XI
+Article XIX:2, Article XIX:1
+Article XIX:3, Article XIX:1
+Article XIX:3, Article XIX:2
+Article XV, Article VIII
+Article XV, Article XI
+Article XV, Article XIII
+Article XVIII, Articles I,
+Article XVIII, Articles II,
+Article XVIII, Articles XIII,
+Article XVIII, Article XVI
+Article XVIII, Article XXII
+Article XX, Article II
+Article XX, Article XVII
+Article XXIV, Article XXVI
+Article XXIV, Article II
+Article XXIV, Article XXVIII
+Article XXIV, Article XI
+Article XXIV, Article XII
+Article XXIV, Article XIII
+Article XXIV, Article XIV
+Article XXIV, Article XV
+Article XXIV, Article XX
+Article XXIV:6, Article II
+Article XXIV:6, Article XXVIII
+
+
+
+
+
+
